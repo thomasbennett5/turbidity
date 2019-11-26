@@ -87,6 +87,8 @@ GPIO.setmode(GPIO.BCM)
 
 # Initialize communication with ADS1256
 ADC = ADS1256.ADS1256()
+if (ADC.ADS1256_init() == -1):
+    exit()
 
 # DAC Intitialisation
 DAC = dac.DAC8532()
