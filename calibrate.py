@@ -1,4 +1,4 @@
-import ads1256 as adc
+import ADS1256 as adc
 import DAC8532 as dac
 import RPi.GPIO as GPIO
 import numpy as np
@@ -6,9 +6,9 @@ from time import sleep
 import datetime as dt
 import csv
 
-def readADC_volts():
+def readADC_volts(Sensor_channel = 7):
     # Read voltage from ADS1256
-    reading = float(adc.read_channel(5))
+    reading = ADC.ADS1256_GetChannalValue(Sensor_channel)
     voltage = reading/8388607 * 5
     return voltage
 
@@ -87,7 +87,7 @@ def file_output(dictionary, header=header_make()):
     
 
 # Initialize communication with ADS1256
-adc.start("1", "1000")
+ADC = ADS1256.ADS1256()
 
 # DAC Intitialisation
 DAC = dac.DAC8532()
