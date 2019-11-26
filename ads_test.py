@@ -7,14 +7,13 @@ GPIO.setmode(GPIO.BCM)
 def readADC_volts(Sensor_channel = 7):
     # Read voltage from ADS1256
     reading = ADC.ADS1256_GetChannalValue(Sensor_channel)
-    voltage = reading/8388607 * 5
+    voltage = (reading/0x7fffff) * 5
     return voltage
 
 # Initialize communication with ADS1256
 ADC = ADS1256.ADS1256()
 ADC.ADS1256_init()
 ADC.ADS1256_ConfigADC(1,0x03)
-ADC.ADS1256_init()
 
 for i in range(1000):    
     #reading = ads1256.read_all_channels()
