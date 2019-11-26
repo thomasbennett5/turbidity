@@ -1,7 +1,7 @@
 import datetime as dt
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
-import ads1256
+import ADS1256
 import numpy as np
 from matplotlib import ticker
 from matplotlib.widgets import Button, RadioButtons
@@ -24,9 +24,9 @@ def quit(event):
     ani.event_source.stop()
     return
 
-def readADC():
+def readADC(Sensor_channel = 7):
     # Read voltage from ADS1256
-    reading = float(ads1256.read_channel(5))
+    reading = ADC.ADS1256_GetChannalValue(Sensor_channel)
     voltage = reading/8388607 * 5
     return voltage
 
@@ -96,7 +96,7 @@ ys_master = []
 line, = live_line.plot(xs_master,ys_master)
 
 # Initialize communication with ADS1256
-ads1256.start("1", "1000")
+ADC = ADS1256.ADS1256()
 
 # DAC Intitialisation
 DAC = DAC8532.DAC8532()
@@ -117,6 +117,5 @@ ani = animation.FuncAnimation(fig, animate, fargs=(ys_master,xs_master,), interv
 plt.show()
 
 DAC.DAC8532_Out_Voltage(DAC8532.channel_A, 0)
-ads1256.stop()
 GPIO.cleanup()
 
