@@ -87,6 +87,7 @@ GPIO.setmode(GPIO.BCM)
 
 # Initialize communication with ADS1256
 ADC = ADS1256.ADS1256()
+ADC.ADS1256_ConfigADC(1,0x82)
 if (ADC.ADS1256_init() == -1):
     exit()
 
@@ -118,5 +119,4 @@ file_output(calibration_data)
 
 
 DAC.DAC8532_Out_Voltage(dac.channel_A, 0)
-adc.stop()
 GPIO.cleanup()
