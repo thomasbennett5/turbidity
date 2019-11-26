@@ -5,6 +5,7 @@ import numpy as np
 from time import sleep
 import datetime as dt
 import csv
+import RPi.GPIO as GPIO 
 
 def readADC_volts(Sensor_channel = 7):
     # Read voltage from ADS1256
@@ -82,7 +83,8 @@ def file_output(dictionary, header=header_make()):
     #file.write(str(calibration_data))
     calib_out.close()    
 
-    
+
+GPIO.setmode(GPIO.BCM)   
 
 # Initialize communication with ADS1256
 ADC = ADS1256.ADS1256()

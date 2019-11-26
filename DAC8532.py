@@ -7,12 +7,12 @@ channel_B   = 0x34
 
 DAC_Value_MAX = 65535
 
-DAC_VREF = 5
+DAC_VREF = 3.3
 
 class DAC8532:
     def __init__(self):
-        self.cs_pin = config.CS_PIN
-        config.module_init()
+        self.cs_pin = config.CS_DAC_PIN
+        # config.module_init()
         
     
     def DAC8532_Write_Data(self, Channel, Data):
@@ -22,8 +22,8 @@ class DAC8532:
         
     def DAC8532_Out_Voltage(self, Channel, Voltage):
         if((Voltage <= DAC_VREF) and (Voltage >= 0)):
-            temp = int(Voltage * DAC_Value_MAX / DAC_VREF);
+            temp = int(Voltage * DAC_Value_MAX / DAC_VREF)
             self.DAC8532_Write_Data(Channel, temp)
-      
+  
 ### END OF FILE ###
 

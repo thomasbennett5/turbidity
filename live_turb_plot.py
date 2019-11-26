@@ -9,7 +9,6 @@ from time import sleep
 import DAC8532
 import RPi.GPIO as GPIO
 
-
 # Function to stop the animation on button press and save data gathered
 def savquit(event):
     ani.event_source.stop()

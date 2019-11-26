@@ -1,4 +1,4 @@
-import ADS1256_config as config
+import config
 import RPi.GPIO as GPIO
 
 
@@ -103,7 +103,7 @@ class ADS1256:
                 
                 break
         if(i >= 400000):
-            print "Time Out ...\r\n"
+            print ("Time Out ...\r\n")
         
         
     def ADS1256_ReadChipID(self):
@@ -155,9 +155,9 @@ class ADS1256:
         self.ADS1256_reset()
         id = self.ADS1256_ReadChipID()
         if id == 3 :
-            print"ID Read success  "
+            print("ID Read success  ")
         else:
-            print"ID Read failed   "
+            print("ID Read failed   ")
             return -1
         self.ADS1256_ConfigADC(ADS1256_GAIN_E['ADS1256_GAIN_1'], ADS1256_DRATE_E['ADS1256_30000SPS'])
         return 0
