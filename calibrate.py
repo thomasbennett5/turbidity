@@ -20,7 +20,7 @@ def calibrate():
     led_levels = np.arange(0,5.5,0.5)
     calibration_data["LEDv"] = led_levels
     response2LED = np.zeros(len(led_levels))
-    print heading("NTU Value: "+str(NTU_value))
+    print heading("NTU Value: " + str(NTU_value))
 
     for i, y in enumerate(led_levels):
         DAC.DAC8532_Out_Voltage(dac.channel_A, y)
