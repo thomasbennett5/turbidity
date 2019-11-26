@@ -1,4 +1,4 @@
-import ADS1256 as adc
+import ADS1256
 import DAC8532 as dac
 import RPi.GPIO as GPIO
 import numpy as np
@@ -41,9 +41,7 @@ def calibrate():
 def header_make():
         
     title = "Calibration file for turbity fibre optics system"
-    datetime  = "Date and Time of Calibration: " + dt.datetime.now().strftime('%Y-%m-%d - %H:%M:%S')
-    
-    
+    datetime  = "Date and Time of Calibration: " + dt.datetime.now().strftime('%Y-%m-%d - %H:%M:%S')    
     header = [title, datetime]
     return header
 
