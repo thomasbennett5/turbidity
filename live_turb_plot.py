@@ -96,6 +96,8 @@ line, = live_line.plot(xs_master,ys_master)
 
 # Initialize communication with ADS1256
 ADC = ADS1256.ADS1256()
+if (ADC.ADS1256_init() == -1):
+    exit()
 
 # DAC Intitialisation
 DAC = DAC8532.DAC8532()
