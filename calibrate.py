@@ -9,7 +9,7 @@ import RPi.GPIO as GPIO
 
 def readADC_volts(Sensor_channel = 7):
     # Read voltage from ADS1256
-    reading = ADC.ADS1256_GetChannalValue(Sensor_channel)
+    reading = float(ADC.ADS1256_GetChannalValue(Sensor_channel))
     voltage = reading/8388607 * 5
     return voltage
 
