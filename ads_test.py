@@ -12,6 +12,7 @@ def readADC_volts(Sensor_channel = 7):
 
 # Initialize communication with ADS1256
 ADC = ADS1256.ADS1256()
+ADC.ADS1256_ConfigADC(1,00x03)
 
 for i in range(1000):    
     #reading = ads1256.read_all_channels()
