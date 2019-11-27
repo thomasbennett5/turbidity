@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-calib_data = open("261119-NTUstds-sensgain10.txt")
+calib_data = open("261119-NTUstds-sensgain10_rep2.txt")
 
 raw_data = calib_data.readlines()
 
@@ -17,8 +17,8 @@ data = np.array(data).astype(np.float)
 print (data)
 
 plt.figure()
-x_ax = data[:,1]
-for i in [0,2,3,4]:
+x_ax = data[:,0]
+for i in [1,2,3,4,5]:
     plt.plot(x_ax,data[:,i], label = header[i])
 plt.legend()
 plt.show()
