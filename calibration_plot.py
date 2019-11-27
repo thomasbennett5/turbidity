@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-calib_data = open("261119-NTUstds-sensgain10_rep2.txt")
+calib_data = open("271119-NTUstds-sensgain10_rep4.txt")
 
 raw_data = calib_data.readlines()
 
@@ -14,11 +14,38 @@ for idx, row in enumerate(data):
     data[idx] = row.split()
 
 data = np.array(data).astype(np.float)
-print (data)
 
-plt.figure()
+print (header)
+plt.figure(1)
 x_ax = data[:,0]
-for i in [1,2,3,4,5]:
+for i in range(1,6):
     plt.plot(x_ax,data[:,i], label = header[i])
 plt.legend()
+
+sens_header = header.copy()
+sens_header.remove("LEDv")
+sens_data = np.delete(data,0,1)
+
+
+if sens_header[0] == "air":
+    sens_header[0] = 0
+
+sens_header = np.array(sens_header).astype(np.float)
+
+plt.figure(2)
+
+sorted_idx = sens_header.argsort()
+
+sens_header = sens_header[sorted_idx]
+sens_data   = sens_data[:,sorted_idx]
+
+print (sens_data)
+print (sens_header)
+calibration_range = int(np.where(sens_data[:,0] == 5.0)[0]) - 1
+
+print (calibration_range)
+
+for i in range(len(sens_data[:calibration_range,0])):
+    plt.plot(sens_data[i,:], sens_header)
 plt.show()
+    
