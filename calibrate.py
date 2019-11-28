@@ -99,6 +99,7 @@ calibration_data = {}
 
 print 'Turbidity calibration routine'
 print "To calibrate for air, enter 'air' below"
+print "To calibrate for an empty cuvette, enter 'empty' below "
 print 'For calibration standards, enter the NTU value below'
 print "Once you are done, enter 'done' "
 
@@ -110,6 +111,8 @@ while True:
         calibration_data["air"] = calibrate()
     if NTU_value == "done":
         break
+    if NTU_value == "empty":
+        calibration_data["empty"] = calibrate()
     else:
         if NTU_value != "done":
             try:
