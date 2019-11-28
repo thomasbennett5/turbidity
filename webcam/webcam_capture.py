@@ -84,8 +84,8 @@ img.add_patch(rect)
 text = fig.add_subplot(2,1,2)
 text.get_xaxis().set_visible(False)
 text.get_yaxis().set_visible(False)
-text.text(0.2, 0.6 , "White mean : " + str(whiteArea))
-text.text(0.2, 0.5 , "Black mean : " + str(blackArea))
+text.text(0.2, 0.6 , "White mean : " + str(whiteArea_avg))
+text.text(0.2, 0.5 , "Black mean : " + str(blackArea_avg))
 text.text(0.2, 0.4 , "Difference : " + str(whiteArea - blackArea))
 
 
