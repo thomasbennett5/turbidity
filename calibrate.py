@@ -103,16 +103,21 @@ print 'For calibration standards, enter the NTU value below'
 print "Once you are done, enter 'done' "
 
 NTU_value = None
-while NTU_value != 'done':
+while True:
     NTU_value = raw_input("Enter value here: ")
 
     if NTU_value == "air":
         calibration_data["air"] = calibrate()
-
+    if NTU_value == "done":
+        break
     else:
         if NTU_value != "done":
-            NTU_value = float(NTU_value)
-            calibration_data[str(NTU_value)] = calibrate()
+            try:
+                NTU_value = float(NTU_value)
+                calibration_data[str(NTU_value)] = calibrate()
+            except:
+                print "pardon?"
+        
 
 
 file_output(calibration_data)

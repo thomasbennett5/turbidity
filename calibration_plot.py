@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-calib_data = open("271119-NTUstds-sensgain10_rep4.txt")
+calib_data = open("data_calibration/271119-NTUstds-sensgain10_rep10.txt")
 
 raw_data = calib_data.readlines()
 
@@ -41,11 +41,34 @@ sens_data   = sens_data[:,sorted_idx]
 
 print (sens_data)
 print (sens_header)
-calibration_range = int(np.where(sens_data[:,0] == 5.0)[0]) - 1
+calibration_range = int(np.where(sens_data[:,1] == 5.0)[0]) - 1
 
-print (calibration_range)
+#print (calibration_range)
 
+sens_header = sens_header[1:]
+sens_data = sens_data[:,1:]
+
+calibration_fit = []
 for i in range(len(sens_data[:calibration_range,0])):
+    fit = np.polyfit(sens_data[i,:],sens_header,1)
+    calibration_fit.append(fit)
     plt.plot(sens_data[i,:], sens_header)
+
+print ("FIt is ",fit)
+x = data[:,0]
+#fit_data = fit[0]*(x**2)  + fit[1]*x + fit[2]
+fit_data  = fit[0]*x + fit[1]
+print (fit_data)
+plt.plot(data[:,0],fit_data)
+#plt.show()
+
+#print (calibration_fit)
+
+calibration_fit = np.array(calibration_fit)
+
+plt.figure(3)
+plt.plot(data[:calibration_range,0],calibration_fit[:,0])
+plt.plot(data[:calibration_range,0],calibration_fit[:,1])
+#plt.plot(data[:calibration_range,0],calibration_fit[:,2])
 plt.show()
-    
+
