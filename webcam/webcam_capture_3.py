@@ -65,11 +65,13 @@ def get_numpy_frame():
             return img_arr
 
 def get_image():
+    stream = io.BytesIO()
     with picamera.PiCamera() as camera:
         res = (1024, 800)
         camera.resolution = res
         
-        return camera.capture()
+        camera.capture(stream, 'jpeg')
+        return stream
 
 
 
@@ -129,5 +131,7 @@ plt.show()
 '''
 
 for i in range(1000):
-    Image.open(get_image()).show()
+    img_stream = get_image()
+    img_stream.seek(0)
+    Image.open(img_stream).show()
     time.sleep(0.1)
