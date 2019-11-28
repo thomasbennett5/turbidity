@@ -75,7 +75,7 @@ def get_image():
 
 
 
-def update():
+def update(i):
     #live_img.set_data(get_image())
     img_stream = get_image()
     img_stream.seek(0)
@@ -121,7 +121,7 @@ plt.ion()
 
 img = fig.add_subplot(1,2,1)
 #live_img = img.imshow(get_image())
-update()
+update(1)
 '''
 white_rect = patches.Rectangle((whiteArea_start,y0),whiteArea_width,whiteArea_height,linewidth=1,edgecolor='r',facecolor='none')
 black_rect = patches.Rectangle((blackArea_start,y0),blackArea_width,blackArea_height,linewidth=1,edgecolor='r',facecolor='none')
@@ -137,5 +137,5 @@ text.text(0.2, 0.5 , "Black mean : " + str(blackArea_avg))
 text.text(0.2, 0.4 , "Difference : " + str(whiteArea_avg - blackArea_avg))
 '''
 
-ani = FuncAnimation(fig, update, interval=1000)
+ani = FuncAnimation(plt.gcf(), update, interval=1000)
 plt.show()
