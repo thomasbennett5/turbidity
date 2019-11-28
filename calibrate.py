@@ -89,7 +89,7 @@ GPIO.setmode(GPIO.BCM)
 ADC = ADS1256.ADS1256()
 if (ADC.ADS1256_init() == -1):
     exit()
-ADC.ADS1256_ConfigADC(1,0x92)
+ADC.ADS1256_ConfigADC(1,0xA1)
 
 # DAC Intitialisation
 DAC = dac.DAC8532()
@@ -106,7 +106,6 @@ print "Once you are done, enter 'done' "
 NTU_value = None
 while True:
     NTU_value = raw_input("Enter value here: ")
-
     if NTU_value == "air":
         calibration_data["air"] = calibrate()
     if NTU_value == "done":
