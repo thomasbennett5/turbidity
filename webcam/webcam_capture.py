@@ -76,19 +76,20 @@ print "Difference         : ", whiteArea_avg - blackArea_avg
 
 fig = plt.figure()
 
-img = fig.add_subplot(2,1,1)
+img = fig.add_subplot(1,2,1)
 img.imshow(img_arr)
 
-rect = patches.Rectangle((whiteArea_start,y0),whiteArea_width,whiteArea_height,linewidth=1,edgecolor='r',facecolor='none')
-img.add_patch(rect)
+white_rect = patches.Rectangle((whiteArea_start,y0),whiteArea_width,whiteArea_height,linewidth=1,edgecolor='r',facecolor='none')
+black_rect = patches.Rectangle((blackArea_start,y0),blackArea_width,blackArea_height,linewidth=1,edgecolor='r',facecolor='none')
 
-text = fig.add_subplot(2,1,2)
+img.add_patch(white_rect)
+img.add_patch(black_rect)
+
+text = fig.add_subplot(1,2,2)
 text.get_xaxis().set_visible(False)
 text.get_yaxis().set_visible(False)
 text.text(0.2, 0.6 , "White mean : " + str(whiteArea_avg))
 text.text(0.2, 0.5 , "Black mean : " + str(blackArea_avg))
 text.text(0.2, 0.4 , "Difference : " + str(whiteArea_avg - blackArea_avg))
-
-
 
 plt.show()
