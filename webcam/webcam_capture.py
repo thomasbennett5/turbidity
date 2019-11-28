@@ -1,37 +1,16 @@
 #!/usr/bin/python
-import os
-import pygame, sys
+from picamera import PiCamera
+import time
 
-from pygame.locals import *
-import pygame.camera
+cam = PiCamera()
 
-width  = 1280
-height = 720
+cam.start_preview()
 
-#initialise pygame   
-pygame.init()
-pygame.camera.init()
-cam = pygame.camera.Camera("/dev/video0",(width,height))
-cam.start()
+time.sleep(1000)
+
+cam.resolution = (2592, 1944)
+cam.exposure_mode = 'off'
 
 
-#setup window
-windowSurfaceObj = pygame.display.set_mode((width,height),1,16)
-pygame.display.set_caption('Camera')
 
-
-#take a picture
-image = cam.get_image()
-cam.stop()
-
-print image
-
-
-#display the picture
-catSurfaceObj = image
-windowSurfaceObj.blit(catSurfaceObj,(0,0))
-pygame.display.update()
-
-#save picture
-pygame.image.save(windowSurfaceObj,'picture.jpg')
-
+cam.capture('/home/pi/Desktop/test.jpg')
