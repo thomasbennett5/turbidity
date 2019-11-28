@@ -45,7 +45,8 @@ def get_frame():
         camera.framerate = 24
         #time.sleep(2)
         output = np.empty((res[1], res[0], 3), dtype=np.uint8)
-        camera.capture(output, 'rgb')
+        #camera.capture(output, 'rgb')
+        camera.capture(output)
         return output[:,:,0]
         
         '''
