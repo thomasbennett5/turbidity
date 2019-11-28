@@ -49,5 +49,5 @@ with picamera.PiCamera() as camera:
 
 img_arr = stream.rgb_array
 
-plt.imshow(img_arr[:,:,0])
+plt.imshow(img_arr[350:480,180:650,0])
 plt.show()
