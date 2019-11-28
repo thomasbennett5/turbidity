@@ -75,7 +75,7 @@ def get_image():
 
 
 
-def update(i):
+def update():
     #live_img.set_data(get_image())
     img_stream = get_image()
     img_stream.seek(0)
