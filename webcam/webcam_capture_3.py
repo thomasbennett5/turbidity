@@ -111,6 +111,7 @@ print ("Black area average : ", blackArea_avg)
 print ("Difference         : ", whiteArea_avg - blackArea_avg)
 
 fig = plt.figure()
+plt.ion()
 
 img = fig.add_subplot(1,2,1)
 live_img = img.imshow(img_arr)
