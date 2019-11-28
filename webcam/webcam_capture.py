@@ -36,19 +36,23 @@ fheight = (height + 15) // 16 * 16
 Y = np.fromfile(stream, dtype=np.uint8, count=fwidth*fheight).\
         reshape((fheight, fwidth))
 '''
+def get_frame():
 
-with picamera.PiCamera() as camera:
-    with picamera.array.PiYUVArray(camera) as stream:
-        camera.resolution = (1000, 800)
-        #camera.start_preview()
-        #time.sleep(2)
-        camera.capture(stream, 'yuv')
-        # Show size of YUV data
-        print(stream.array.shape)
-        # Show size of RGB converted data
-        print(stream.rgb_array.shape)
+    with picamera.PiCamera() as camera:
+        with picamera.array.PiYUVArray(camera) as stream:
+            camera.resolution = (1000, 800)
+            #camera.start_preview()
+            #time.sleep(2)
+            camera.capture(stream, 'yuv')
+            # Show size of YUV data
+            print(stream.array.shape)
+            # Show size of RGB converted data
+            print(stream.rgb_array.shape)
+            img_arr = stream.rgb_array[:,:,0]
+            return img_arr
 
-img_arr = stream.rgb_array
+def update(i):
+    img.set_data(get_frame())
 
 y0 = 350
 y1 = 480
@@ -65,7 +69,7 @@ blackArea_stop  = x0 + 300
 blackArea_width = blackArea_stop - blackArea_start
 blackArea_height= y1 - y0
 
-aoi = img_arr[350:480,180:650,0]
+aoi = img_arr[350:480,180:650]
 
 whiteArea_avg = np.average(img_arr[y0:y1, whiteArea_start:whiteArea_stop])
 blackArea_avg = np.average(img_arr[y0:y1, blackArea_start:blackArea_stop])
@@ -92,4 +96,5 @@ text.text(0.2, 0.6 , "White mean : " + str(whiteArea_avg))
 text.text(0.2, 0.5 , "Black mean : " + str(blackArea_avg))
 text.text(0.2, 0.4 , "Difference : " + str(whiteArea_avg - blackArea_avg))
 
+ani = FuncAnimation(plt.gcf(), update, interval=200)
 plt.show()
