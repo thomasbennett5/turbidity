@@ -70,17 +70,16 @@ def get_image():
     with picamera.PiCamera() as camera:
         res = (1024, 800)
         camera.resolution = res
-        
         camera.capture(stream, 'jpeg')
         return stream
 
 
 
 def update(i):
-    live_img.set_data(get_image())
+    live_img.set_data(get_numpy_frame())
 
 
-img_arr = get_image()
+img_arr = get_numpy_frame()
 
 y0 = 350
 y1 = 480
