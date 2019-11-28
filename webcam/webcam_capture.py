@@ -56,10 +56,13 @@ aoi = img_arr[350:480,180:650,0]
 whiteArea = np.average(aoi[:,:100])
 blackArea = np.average(aoi[:,200:300])
 
+plt.figure(1)
 plt.imshow(img_arr[350:480,180:650,0])
-plt.text(50,-20,"White mean :" + str(whiteArea))
-plt.text(200, -40, "Black mean :" + str(blackArea))
-plt.text(350,-60, "Difference : " + str(whiteArea - blackArea))
+
+plt.figure(2)
+plt.text(50,  1  , "White mean : " + str(whiteArea))
+plt.text(200, 0.5, "Black mean : " + str(blackArea))
+plt.text(350, 0  , "Difference : " + str(whiteArea - blackArea))
 
 
 
