@@ -38,7 +38,7 @@ fheight = (height + 15) // 16 * 16
 Y = np.fromfile(stream, dtype=np.uint8, count=fwidth*fheight).\
         reshape((fheight, fwidth))
 '''
-def get_frame():
+def get_numpy_frame():
 
     with picamera.PiCamera() as camera:
         '''
@@ -63,6 +63,15 @@ def get_frame():
             print(stream.rgb_array.shape)
             img_arr = stream.rgb_array[:,:,0]
             return img_arr
+
+def get_image():
+    with picamera.PiCamera() as camera:
+        res = (1024, 800)
+        camera.resolution = res
+        
+        return camera.capture()
+
+
 
 def update(i):
     live_img.set_data(get_frame())
@@ -122,5 +131,5 @@ plt.show()
 Image.open(get_frame())
 
 for i in range(1000):
-    Image.open(get_frame()).show()
+    Image.open(get_image()).show()
     time.sleep(0.1)
