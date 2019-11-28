@@ -1,59 +1,71 @@
-# Pi Camera class for capturing and previewing images for analysis
-
-
 import io
-import logging
+import time
+import threading
+import picamera
 
-from PIL import Image
+# Create a pool of image processors
+done = False
+lock = threading.Lock()
+pool = []
 
-from picamera import PiCamera
-
-from .CameraInterface import CameraInterface
-
-
-class CameraPicamera(CameraInterface):
-
+class ImageProcessor(threading.Thread):
     def __init__(self):
+        super(ImageProcessor, self).__init__()
+        self.stream = io.BytesIO()
+        self.event = threading.Event()
+        self.terminated = False
+        self.start()
 
-        super().__init__()
+    def run(self):
+        # This method runs in a separate thread
+        global done
+        while not self.terminated:
+            # Wait for an image to be written to the stream
+            if self.event.wait(1):
+                try:
+                    self.stream.seek(0)
+                    # Read the image and do some processing on it
+                    #Image.open(self.stream)
+                    #...
+                    #...
+                    # Set done to True if you want the script to terminate
+                    # at some point
+                    #done=True
+                finally:
+                    # Reset the stream and event
+                    self.stream.seek(0)
+                    self.stream.truncate()
+                    self.event.clear()
+                    # Return ourselves to the pool
+                    with lock:
+                        pool.append(self)
 
-        self.hasPreview = True
-        self.hasIdle = True
+def streams():
+    while not done:
+        with lock:
+            if pool:
+                processor = pool.pop()
+            else:
+                processor = None
+        if processor:
+            yield processor.stream
+            processor.event.set()
+        else:
+            # When the pool is starved, wait a while for it to refill
+            time.sleep(0.1)
 
-        logging.info('Using PiCamera')
+with picamera.PiCamera() as camera:
+    pool = [ImageProcessor() for i in range(4)]
+    camera.resolution = (640, 480)
+    camera.framerate = 30
+    camera.start_preview()
+    time.sleep(2)
+    camera.capture_sequence(streams(), use_video_port=True)
 
-        self._cap = None
-
-        self.setActive()
-        self._preview_resolution = (self._cap.resolution[0] // 2,
-                                    self._cap.resolution[1] // 2)
-        self.setIdle()
-
-    def setActive(self):
-
-        if self._cap is None or self._cap.closed:
-            self._cap = PiCamera()
-
-    def setIdle(self):
-
-        if self._cap is not None and not self._cap.closed:
-            self._cap.close()
-            self._cap = None
-
-    def getPreview(self):
-
-        self.setActive()
-        stream = io.BytesIO()
-        self._cap.capture(stream, format='jpeg', use_video_port=True,
-                          resize=self._preview_resolution)
-        stream.seek(0)
-        return Image.open(stream)
-
-    def getPicture(self):
-
-        self.setActive()
-        stream = io.BytesIO()
-        self._cap.capture(stream, format='jpeg', resize=None)
-        stream.seek(0)
-        return Image.open(stream)
-© 2019 GitHub, Inc.
+# Shut down the processors in an orderly fashion
+while pool:
+    with lock:
+        processor = pool.pop()
+    processor.terminated = True
+    processor.join()
+    
