@@ -53,7 +53,7 @@ def get_frame():
             return img_arr
 
 def update(i):
-    img.set_data(get_frame())
+    live_img.set_data(get_frame())
 
 
 img_arr = get_frame()
@@ -85,7 +85,7 @@ print "Difference         : ", whiteArea_avg - blackArea_avg
 fig = plt.figure()
 
 img = fig.add_subplot(1,2,1)
-img.imshow(img_arr)
+live_img = img.imshow(img_arr)
 
 white_rect = patches.Rectangle((whiteArea_start,y0),whiteArea_width,whiteArea_height,linewidth=1,edgecolor='r',facecolor='none')
 black_rect = patches.Rectangle((blackArea_start,y0),blackArea_width,blackArea_height,linewidth=1,edgecolor='r',facecolor='none')
