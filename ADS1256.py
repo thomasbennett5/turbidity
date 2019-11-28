@@ -127,7 +127,9 @@ class ADS1256:
         config.spi_writebyte(buf)
         
         config.digital_write(self.cs_pin, GPIO.HIGH)#cs 1
-        config.delay_ms(1) 
+        config.delay_ms(1)
+        print "config updated"
+
 
 
 
