@@ -18,19 +18,20 @@ def led_brightness(level):
     DAC.DAC8532_Out_Voltage(dac.channel_A, trig_volt[level])
 
 def calibrate():
-    led_levels = np.arange(1.5,5.1,0.2)
+    led_levels = np.arange(0,5.1,0.1)
     calibration_data["LEDv"] = led_levels
     response2LED = np.zeros(len(led_levels))
     print heading("NTU Value: " + str(NTU_value))
 
     for i, y in enumerate(led_levels):
+        repeats = 100
         DAC.DAC8532_Out_Voltage(dac.channel_A, y)
-        sleep(0.2)
-        average = np.zeros(10)
+        sleep(0.02)
+        average = np.zeros(repeats)
         for j, x in enumerate(average):
             if j == 0: readADC_volts()
             average[j] = readADC_volts()
-            sleep(0.02)
+            sleep(0.01)
 
         response2LED[i] = np.average(average)
         print "LED Voltage: ", y, "Sensor Voltage: ", response2LED[i]
