@@ -54,6 +54,9 @@ def get_frame():
 def update(i):
     img.set_data(get_frame())
 
+
+img_arr = get_frame()
+
 y0 = 350
 y1 = 480
 x0 = 180
@@ -69,7 +72,7 @@ blackArea_stop  = x0 + 300
 blackArea_width = blackArea_stop - blackArea_start
 blackArea_height= y1 - y0
 
-aoi = img_arr[350:480,180:650]
+#aoi = img_arr[350:480,180:650]
 
 whiteArea_avg = np.average(img_arr[y0:y1, whiteArea_start:whiteArea_stop])
 blackArea_avg = np.average(img_arr[y0:y1, blackArea_start:blackArea_stop])
