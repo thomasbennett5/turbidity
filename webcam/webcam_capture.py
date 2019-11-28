@@ -56,10 +56,18 @@ aoi = img_arr[350:480,180:650,0]
 whiteArea = np.average(aoi[:,:100])
 blackArea = np.average(aoi[:,200:300])
 
-plt.figure(1)
-plt.imshow(img_arr[350:480,180:650,0])
+print "White area average : ", whiteArea
+print "Black area average : ", blackArea
+print "Difference         : ", whiteArea - blackArea
 
-plt.figure(2)
+fig = plt.figure()
+
+img = fig.add_subplot(2,1,1)
+img.imshow(img_arr[350:480,180:650,0])
+
+text = fig.add_subplot(2,1,2)
+text.get_xaxis().set_visible(False)
+text.get_yaxis().set_visible(False)
 plt.text(50,  1  , "White mean : " + str(whiteArea))
 plt.text(200, 0.5, "Black mean : " + str(blackArea))
 plt.text(350, 0  , "Difference : " + str(whiteArea - blackArea))
