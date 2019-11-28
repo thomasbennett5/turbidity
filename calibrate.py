@@ -24,14 +24,14 @@ def calibrate():
     print heading("NTU Value: " + str(NTU_value))
 
     for i, y in enumerate(led_levels):
-        repeats = 100
+        repeats = 50
         DAC.DAC8532_Out_Voltage(dac.channel_A, y)
         sleep(0.01)
         average = np.zeros(repeats)
         for j, x in enumerate(average):
             if j == 0: readADC_volts()
             average[j] = readADC_volts()
-            sleep(0.005)
+            #sleep(0.001)
 
         response2LED[i] = np.average(average)
         print "LED Voltage: ", y, "Sensor Voltage: ", response2LED[i]
@@ -40,8 +40,7 @@ def calibrate():
 
     return response2LED
 
-def header_make():
-        
+def header_make():  
     title = "Calibration file for turbity fibre optics system"
     datetime  = "Date and Time of Calibration: " + dt.datetime.now().strftime('%Y-%m-%d - %H:%M:%S')    
     header = [title, datetime]
