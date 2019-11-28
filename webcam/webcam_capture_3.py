@@ -40,7 +40,7 @@ Y = np.fromfile(stream, dtype=np.uint8, count=fwidth*fheight).\
 def get_frame():
 
     with picamera.PiCamera() as camera:
-        res = (1000, 800)
+        res = (1024, 800)
         camera.resolution = res
         #camera.framerate = 24
         #time.sleep(2)
