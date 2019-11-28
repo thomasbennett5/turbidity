@@ -128,8 +128,6 @@ text.text(0.2, 0.4 , "Difference : " + str(whiteArea_avg - blackArea_avg))
 plt.show()
 '''
 
-Image.open(get_frame())
-
 for i in range(1000):
     Image.open(get_image()).show()
     time.sleep(0.1)
