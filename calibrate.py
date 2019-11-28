@@ -58,7 +58,7 @@ def file_output(dictionary, header=header_make()):
     
     sort_ind = np.argsort(dictionary.keys())
     colhdr = np.array(dictionary.keys())[sort_ind]
-    colhdr = np.roll(colhdr, 2)
+    
     
     colhdr = tuple(colhdr)
     colhdr = "%6s "*len(colhdr)%colhdr
@@ -75,6 +75,7 @@ def file_output(dictionary, header=header_make()):
         if i in ['air','empty', 'LEDv']:
             # roll the array 3 place to the right i.e. last column becomes first
             calib_data = np.roll(calib_data,1, axis=1)
+            colhdr = np.roll(colhdr, 2)
     
     
     np.savetxt(calib_out,calib_data, header = colhdr, fmt="%1.4f", comments = "")    
