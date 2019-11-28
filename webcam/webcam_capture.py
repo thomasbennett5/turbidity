@@ -2,6 +2,8 @@
 import time
 import picamera
 import picamera.array
+import numpy as np
+import matplotlib.pyplot as plt
 
 '''
 cam.start_preview()
@@ -37,10 +39,15 @@ Y = np.fromfile(stream, dtype=np.uint8, count=fwidth*fheight).\
 with picamera.PiCamera() as camera:
     with picamera.array.PiYUVArray(camera) as stream:
         camera.resolution = (100, 100)
-        camera.start_preview()
-        time.sleep(2)
+        #camera.start_preview()
+        #time.sleep(2)
         camera.capture(stream, 'yuv')
         # Show size of YUV data
         print(stream.array.shape)
         # Show size of RGB converted data
         print(stream.rgb_array.shape)
+
+img_arr = stream.rgb_array
+
+plt.imshow(img_arr)
+plt.show()
