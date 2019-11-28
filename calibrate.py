@@ -26,12 +26,12 @@ def calibrate():
     for i, y in enumerate(led_levels):
         repeats = 100
         DAC.DAC8532_Out_Voltage(dac.channel_A, y)
-        sleep(0.02)
+        sleep(0.01)
         average = np.zeros(repeats)
         for j, x in enumerate(average):
             if j == 0: readADC_volts()
             average[j] = readADC_volts()
-            sleep(0.01)
+            sleep(0.005)
 
         response2LED[i] = np.average(average)
         print "LED Voltage: ", y, "Sensor Voltage: ", response2LED[i]
@@ -90,7 +90,7 @@ GPIO.setmode(GPIO.BCM)
 ADC = ADS1256.ADS1256()
 if (ADC.ADS1256_init() == -1):
     exit()
-ADC.ADS1256_ConfigADC(1,0x82)
+ADC.ADS1256_ConfigADC(1,0x92)
 
 # DAC Intitialisation
 DAC = dac.DAC8532()
@@ -120,12 +120,9 @@ while True:
                 NTU_value = float(NTU_value)
                 calibration_data[str(NTU_value)] = calibrate()
             except:
-                print "pardon?"
-        
-
+                print "pardon?"   
 
 file_output(calibration_data)
-
 
 DAC.DAC8532_Out_Voltage(dac.channel_A, 0)
 GPIO.cleanup()
