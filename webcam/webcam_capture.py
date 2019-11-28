@@ -68,9 +68,9 @@ img.imshow(img_arr[350:480,180:650,0])
 text = fig.add_subplot(2,1,2)
 text.get_xaxis().set_visible(False)
 text.get_yaxis().set_visible(False)
-text.text(50,  1  , "White mean : " + str(whiteArea))
-text.text(200, 0.5, "Black mean : " + str(blackArea))
-text.text(350, 0  , "Difference : " + str(whiteArea - blackArea))
+text.text(0.2,  1 , "White mean : " + str(whiteArea))
+text.text(0.2, 0.5, "Black mean : " + str(blackArea))
+text.text(0.2, 0  , "Difference : " + str(whiteArea - blackArea))
 
 
 
