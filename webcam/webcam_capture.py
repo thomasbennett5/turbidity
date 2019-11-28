@@ -86,7 +86,7 @@ text.get_xaxis().set_visible(False)
 text.get_yaxis().set_visible(False)
 text.text(0.2, 0.6 , "White mean : " + str(whiteArea_avg))
 text.text(0.2, 0.5 , "Black mean : " + str(blackArea_avg))
-text.text(0.2, 0.4 , "Difference : " + str(whiteArea - blackArea))
+text.text(0.2, 0.4 , "Difference : " + str(whiteArea_avg - blackArea_avg))
 
 
 
