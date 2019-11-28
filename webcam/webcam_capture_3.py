@@ -120,8 +120,8 @@ fig = plt.figure()
 plt.ion()
 
 img = fig.add_subplot(1,2,1)
-live_img = img.imshow(get_image())
-
+#live_img = img.imshow(get_image())
+update()
 '''
 white_rect = patches.Rectangle((whiteArea_start,y0),whiteArea_width,whiteArea_height,linewidth=1,edgecolor='r',facecolor='none')
 black_rect = patches.Rectangle((blackArea_start,y0),blackArea_width,blackArea_height,linewidth=1,edgecolor='r',facecolor='none')
