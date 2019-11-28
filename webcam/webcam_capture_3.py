@@ -115,7 +115,7 @@ fig = plt.figure()
 plt.ion()
 
 img = fig.add_subplot(1,2,1)
-live_img = img.imshow(img_arr)
+live_img = img.imshow(get_image())
 
 '''
 white_rect = patches.Rectangle((whiteArea_start,y0),whiteArea_width,whiteArea_height,linewidth=1,edgecolor='r',facecolor='none')
