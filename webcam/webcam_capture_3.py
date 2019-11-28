@@ -134,5 +134,6 @@ plt.show()
 for i in range(1000):
     img_stream = get_image()
     img_stream.seek(0)
-    Image.open(img_stream).show()
+    img_live = Image.open(img_stream)
+    img_live.show()
     time.sleep(0.1)
