@@ -77,7 +77,11 @@ def get_image():
 
 def update(i):
     #live_img.set_data(get_image())
-    live_img = img.imshow(get_image())
+    img_stream = get_image()
+    img_stream.seek(0)
+    image = Image.open(img_stream)
+    img.imshow(image)
+
     #text.clear()
     #text.text(0.2, 0.6 , "White mean : " + str(whiteArea_avg))
     #text.text(0.2, 0.4 , "Difference : " + str(whiteArea_avg - blackArea_avg))
