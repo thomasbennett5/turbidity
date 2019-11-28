@@ -76,7 +76,7 @@ def get_image():
 def update(i):
     live_img.set_data(get_frame())
 
-
+'''
 img_arr = get_frame()
 
 y0 = 350
@@ -102,7 +102,7 @@ blackArea_avg = np.average(img_arr[y0:y1, blackArea_start:blackArea_stop])
 print ("White area average : ", whiteArea_avg)
 print ("Black area average : ", blackArea_avg)
 print ("Difference         : ", whiteArea_avg - blackArea_avg)
-
+'''
 
 
 '''
