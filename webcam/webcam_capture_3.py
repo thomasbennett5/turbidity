@@ -6,6 +6,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 from matplotlib.animation import FuncAnimation
+from PIL import Image, ImageDraw, ImageFont   
 
 '''
 cam.start_preview()
@@ -93,6 +94,9 @@ print ("White area average : ", whiteArea_avg)
 print ("Black area average : ", blackArea_avg)
 print ("Difference         : ", whiteArea_avg - blackArea_avg)
 
+
+
+'''
 fig = plt.figure()
 
 img = fig.add_subplot(1,2,1)
@@ -111,5 +115,12 @@ text.text(0.2, 0.6 , "White mean : " + str(whiteArea_avg))
 text.text(0.2, 0.5 , "Black mean : " + str(blackArea_avg))
 text.text(0.2, 0.4 , "Difference : " + str(whiteArea_avg - blackArea_avg))
 
-ani = FuncAnimation(plt.gcf(), update, interval=200)
+#ani = FuncAnimation(plt.gcf(), update, interval=200)
 plt.show()
+'''
+
+Image.open(get_frame())
+
+for i in range(1000):
+    Image.open(get_frame()).show()
+    time.sleep(0.1)
