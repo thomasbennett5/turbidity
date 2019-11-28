@@ -65,14 +65,16 @@ def file_output(dictionary, header=header_make()):
     print colhdr
     
     calib_data = np.array(dictionary.values()).T
-       
+    
     if calib_data.ndim == 1:
         calib_data = calib_data[sort_ind]
     else: 
         calib_data = calib_data[:,sort_ind]
-
-    # roll the array 1 place to the right i.e. last column becomes first
-    calib_data = np.roll(calib_data,2, axis=1)
+    
+    for i in dictionary.keys():
+        if i in ['air','empty', 'LEDv']:
+            # roll the array 3 place to the right i.e. last column becomes first
+            calib_data = np.roll(calib_data,1, axis=1)
     
     
     np.savetxt(calib_out,calib_data, header = colhdr, fmt="%1.4f", comments = "")    

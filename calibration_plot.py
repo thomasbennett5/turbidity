@@ -1,10 +1,8 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-calib_data = open("data_calibration/271119-NTUstds-sensgain10_rep10.txt")
-
+calib_data = open("data_calibration/271119-NTUstds-sensgain10_rep7.txt")
 raw_data = calib_data.readlines()
-
 header = raw_data[2].split()
 
 data = raw_data[3:]
@@ -25,7 +23,6 @@ plt.legend()
 sens_header = header.copy()
 sens_header.remove("LEDv")
 sens_data = np.delete(data,0,1)
-
 
 if sens_header[0] == "air":
     sens_header[0] = 0
