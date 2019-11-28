@@ -1,10 +1,8 @@
 #!/usr/bin/python
-import picamera
-from picamera import PiCamera
-import picamera.array
 import time
+import picamera
+import picamera.array
 
-cam = PiCamera()
 '''
 cam.start_preview()
 
