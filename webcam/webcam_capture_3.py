@@ -130,10 +130,10 @@ text.text(0.2, 0.4 , "Difference : " + str(whiteArea_avg - blackArea_avg))
 #ani = FuncAnimation(plt.gcf(), update, interval=200)
 plt.show()
 '''
-
+plt.figure(1)
 for i in range(1000):
     img_stream = get_image()
     img_stream.seek(0)
     img_live = Image.open(img_stream)
-    img_live.show()
+    plt.imshow(img_live)
     time.sleep(0.1)
