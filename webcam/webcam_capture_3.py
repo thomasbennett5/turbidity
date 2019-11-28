@@ -137,5 +137,5 @@ text.text(0.2, 0.5 , "Black mean : " + str(blackArea_avg))
 text.text(0.2, 0.4 , "Difference : " + str(whiteArea_avg - blackArea_avg))
 '''
 
-ani = FuncAnimation(plt.gcf(), update, interval=1000)
+ani = FuncAnimation(fig, update, interval=1000)
 plt.show()
