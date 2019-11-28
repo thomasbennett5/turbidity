@@ -69,9 +69,9 @@ aoi = img_arr[350:480,180:650,0]
 whiteArea_avg = np.average(img_arr[y0:y1, whiteArea_start:whiteArea_stop])
 blackArea_avg = np.average(img_arr[y0:y1, blackArea_start:blackArea_stop])
 
-print "White area average : ", whiteArea
-print "Black area average : ", blackArea
-print "Difference         : ", whiteArea - blackArea
+print "White area average : ", whiteArea_avg
+print "Black area average : ", blackArea_avg
+print "Difference         : ", whiteArea_avg - blackArea_avg
 
 fig = plt.figure()
 
