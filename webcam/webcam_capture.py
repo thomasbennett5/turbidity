@@ -38,7 +38,7 @@ Y = np.fromfile(stream, dtype=np.uint8, count=fwidth*fheight).\
 
 with picamera.PiCamera() as camera:
     with picamera.array.PiYUVArray(camera) as stream:
-        camera.resolution = (800, 800)
+        camera.resolution = (1000, 800)
         #camera.start_preview()
         #time.sleep(2)
         camera.capture(stream, 'yuv')
