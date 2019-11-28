@@ -40,6 +40,7 @@ Y = np.fromfile(stream, dtype=np.uint8, count=fwidth*fheight).\
 def get_frame():
 
     with picamera.PiCamera() as camera:
+        '''
         res = (1024, 800)
         camera.resolution = res
         camera.framerate = 24
@@ -61,7 +62,6 @@ def get_frame():
             print(stream.rgb_array.shape)
             img_arr = stream.rgb_array[:,:,0]
             return img_arr
-        '''
 
 def update(i):
     live_img.set_data(get_frame())
