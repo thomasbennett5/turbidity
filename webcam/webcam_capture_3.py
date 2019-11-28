@@ -77,10 +77,10 @@ def get_image():
 
 
 def update(i):
-    live_img.set_data(get_frame())
+    live_img.set_data(get_image())
 
-'''
-img_arr = get_frame()
+
+img_arr = get_image()
 
 y0 = 350
 y1 = 480
@@ -105,10 +105,7 @@ blackArea_avg = np.average(img_arr[y0:y1, blackArea_start:blackArea_stop])
 print ("White area average : ", whiteArea_avg)
 print ("Black area average : ", blackArea_avg)
 print ("Difference         : ", whiteArea_avg - blackArea_avg)
-'''
 
-
-'''
 fig = plt.figure()
 
 img = fig.add_subplot(1,2,1)
@@ -127,13 +124,5 @@ text.text(0.2, 0.6 , "White mean : " + str(whiteArea_avg))
 text.text(0.2, 0.5 , "Black mean : " + str(blackArea_avg))
 text.text(0.2, 0.4 , "Difference : " + str(whiteArea_avg - blackArea_avg))
 
-#ani = FuncAnimation(plt.gcf(), update, interval=200)
+ani = FuncAnimation(plt.gcf(), update, interval=200)
 plt.show()
-'''
-plt.figure(1)
-for i in range(1000):
-    img_stream = get_image()
-    img_stream.seek(0)
-    img_live = Image.open(img_stream)
-    plt.imshow(img_live)
-    time.sleep(0.1)
