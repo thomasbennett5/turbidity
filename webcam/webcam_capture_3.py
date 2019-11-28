@@ -42,7 +42,7 @@ def get_frame():
     with picamera.PiCamera() as camera:
         res = (1024, 800)
         camera.resolution = res
-        #camera.framerate = 24
+        camera.framerate = 24
         #time.sleep(2)
         output = np.empty((res[1], res[0], 3), dtype=np.uint8)
         camera.capture(output, 'rgb')
