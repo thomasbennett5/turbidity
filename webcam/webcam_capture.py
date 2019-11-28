@@ -40,6 +40,15 @@ Y = np.fromfile(stream, dtype=np.uint8, count=fwidth*fheight).\
 def get_frame():
 
     with picamera.PiCamera() as camera:
+        res = (1000, 800)
+        camera.resolution = res
+        #camera.framerate = 24
+        #time.sleep(2)
+        output = np.empty((res[0], res[1], 3), dtype=np.uint8)
+        camera.capture(output, 'rgb')
+        return output[:,:,0]
+        
+        '''
         with picamera.array.PiYUVArray(camera) as stream:
             camera.resolution = (1000, 800)
             #camera.start_preview()
@@ -51,6 +60,7 @@ def get_frame():
             print(stream.rgb_array.shape)
             img_arr = stream.rgb_array[:,:,0]
             return img_arr
+        '''
 
 def update(i):
     live_img.set_data(get_frame())
