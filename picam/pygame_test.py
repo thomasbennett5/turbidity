@@ -10,11 +10,11 @@ def generate_mask(res):
     
 def contrast_measurement(image, box1, box2):
     data = pygame.surfarray.array2d(image).T*255.0/16581375
-    print np.min(data)
+    #print np.min(data)
         
     avg1 = np.average(data[box1[1]:box1[1]+box1[3], box1[0]:box1[0]+box1[2]])
     avg2 = np.average(data[box2[1]:box2[1]+box2[3], box2[0]:box2[0]+box2[2]])
-    print avg1, avg2, avg1-avg2
+    #print avg1, avg2, avg1-avg2
     contrast = abs(avg1-avg2)
 
     
