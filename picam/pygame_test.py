@@ -20,7 +20,7 @@ def contrast_measurement(image, box1, box2):
     
     return contrast
 
-def display_values(text, location, size = 20):
+def display_values(text, location, size = 15):
     font = pygame.font.Font('freesansbold.ttf', size)
     txtSurf = font.render(text, True, WHITE)
     txtRect = txtSurf.get_rect()
@@ -39,17 +39,18 @@ GREEN= (0,255,0)
 
 ## set up some window and image resolutions
 window      = (640,480)
+imgSize     = (int(window[0]*0.9), int(window[1]*0.9))
 resolution  = (320,240)
 box1        = (170,120,100,200)
 box2        = (370,120,100,200)
 
-readyBox    = (645, 450, 100,20)
+readyBox    = (10, 450, 100,20)
 
 #set up pygame window and camera
 pygame.init()
 pygame.camera.init()
 
-screen = pygame.display.set_mode((840,480), 0)
+screen = pygame.display.set_mode((720,480), 0)
 pygame.display.set_caption("Video Turbidity Analysis")
  
 
@@ -62,15 +63,15 @@ contrast_average = np.zeros(20)
 while True:
     screen.fill(BLACK)
     image1 = cam.get_image()
-    image1 = pygame.transform.scale(image1, (640,480))
+    image1 = pygame.transform.scale(image1, imgSize)
     screen.blit(image1, (0,0))
     contrast = contrast_measurement(image1,box1, box2)
     contrast_average = np.roll(contrast_average,1)
     contrast_average[0] = contrast
 
-    display_values("Contrast Value:", (645, 5))
-    display_values(str(np.average(contrast_average)), (645, 25))
-    display_values("Press 'P' to save screenshot", (645, 50), size = 14)
+    display_values("Contrast Value:", (580, 5))
+    display_values(str(np.average(contrast_average)), (580, 25))
+    display_values("Press 'P' to save screenshot", (250, 450), size = 12)
     
     if np.std(contrast_average) < 0.8:
         pygame.draw.rect(screen,GREEN, readyBox,0)
