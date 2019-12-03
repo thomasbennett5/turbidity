@@ -70,6 +70,7 @@ while True:
 
     display_values("Contrast Value:", (645, 5))
     display_values(str(np.average(contrast_average)), (645, 25))
+    display_values("Press 'P' to save screenshot", (645, 50), size = 14)
     
     if np.std(contrast_average) < 0.8:
         pygame.draw.rect(screen,GREEN, readyBox,0)
