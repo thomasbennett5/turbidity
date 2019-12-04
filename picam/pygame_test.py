@@ -120,14 +120,14 @@ while True:
                 color = color_active if active else color_inactive
         if event.type == pygame.KEYDOWN:
             if active:
-                    if event.key == pg.K_s:
+                    if event.key == pygame.K_s and pygame.key.get_mods() & pygame.KMOD_CTRL:
                         pygame.image.save(screen, text +".jpeg")
                         text = ''
                     elif event.key == pg.K_BACKSPACE:
                         text = text[:-1]
                     else:
                         text += event.unicode
-                    
+            
             if event.key == pygame.K_p:
                 fname = dt.datetime.now().strftime('%H:%M:%S')
                 pygame.image.save(screen, "screenshot - "+ fname +".jpeg")
