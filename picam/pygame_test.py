@@ -44,7 +44,7 @@ resolution  = (320,240)
 box1        = (180,120,100,200)
 box2        = (360,120,100,200)
 readyBox    = (10, 450, 100,20)
-saveBox     = (200,450, 100,20)
+saveBox     = (300,450, 100,20)
 
 
 #set up pygame window and camera
