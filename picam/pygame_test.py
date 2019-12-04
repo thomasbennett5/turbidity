@@ -44,7 +44,7 @@ resolution  = (320,240)
 box1        = (180,120,100,200)
 box2        = (360,120,100,200)
 readyBox    = (10, 450, 100,20)
-saveBox     = (200,450, 100,20)
+saveBox     = (150,450, 100,20)
 
 
 #set up pygame window and camera
@@ -126,13 +126,13 @@ while True:
             if active:
                     if event.key == pygame.K_s and pygame.key.get_mods() & pygame.KMOD_CTRL:
                         pygame.image.save(screen, text +".jpeg")
-                        text = ''
+                        #text = ''
                     elif event.key == pygame.K_BACKSPACE:
                         text = text[:-1]
                     else:
                         text += event.unicode
             
-            if event.key == pygame.K_p:
+            if event.key == pygame.K_p and pygame.key.get_mods() & pygame.KMOD_CTRL:
                 fname = dt.datetime.now().strftime('%H:%M:%S')
                 pygame.image.save(screen, "screenshot - "+ fname +".jpeg")
         if event.type == pygame.QUIT:
