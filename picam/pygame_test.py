@@ -44,7 +44,7 @@ resolution  = (320,240)
 box1        = (180,120,100,200)
 box2        = (360,120,100,200)
 readyBox    = (10, 450, 100,20)
-saveBox     = (300,450, 100,20)
+saveBox     = (200,450, 100,20)
 
 
 #set up pygame window and camera
@@ -85,7 +85,7 @@ while True:
     display_values("Contrast Value:", (580, 5))
     display_values(str(np.average(contrast_average)), (580, 25))
     display_values("Press 'P' to save screenshot", (580, 50), size = 10)
-    display_values("Press 'Ctrl-S' to save with filename", (350, 450), size = 10)
+    display_values("Press 'Ctrl-S' to save with filename", (400, 450), size = 10)
     
     if np.std(contrast_average) < 0.8:
         pygame.draw.rect(screen,GREEN, readyBox,0)
