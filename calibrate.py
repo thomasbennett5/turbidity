@@ -73,7 +73,7 @@ def file_output(dictionary, header=header_make()):
         if i in ['air','empty', 'LEDv']:
             # roll the array 3 place to the right i.e. last column becomes first
             calib_data = np.roll(calib_data,1, axis=1)
-            colhdr = np.roll(colhdr, 1)
+            colhdr = np.roll(colhdr, 1, axis = 1)
     
     
     np.savetxt(calib_out,calib_data, header = str(colhdr), fmt="%1.4f", comments = "")

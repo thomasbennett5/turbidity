@@ -1,6 +1,6 @@
 Calibration file for turbity fibre optics system
 Date and Time of Calibration: 2019-12-05 - 13:50:37
-  0.02  100.0   20.0  800.0   LEDv    air  empty 
+  LEDv    air  empty   0.02  100.0   20.0  800.0 
 0.0000 0.0594 0.0595 0.0594 0.0594 0.0594 0.0594
 0.2000 0.3088 0.2253 0.2649 0.2517 0.2574 0.1888
 0.4000 0.6794 0.4723 0.5697 0.5371 0.5513 0.3812
