@@ -74,7 +74,7 @@ def turb_fitting_routine(data, header, plot=False, func='PL'):
 
     calibration_Volts = np.zeros((height_arr,width_arr))
     calibration_Volts[:,1:] = calibration_fit
-    calibration_Volts[:,0]  = data[0:7,0] 
+    calibration_Volts[:,0]  = data[0:calibration_range,0] 
 
     #np.savetxt("current_cal.fit", calibration_Volts)
     fit_approx = calibration_Volts

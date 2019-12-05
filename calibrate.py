@@ -58,11 +58,9 @@ def file_output(dictionary, header=header_make()):
     
     sort_ind = np.argsort(dictionary.keys())
     colhdr = np.array(dictionary.keys())[sort_ind]
-    
-    
     colhdr = tuple(colhdr)
     colhdr = "%6s "*len(colhdr)%colhdr
-    print colhdr
+    print len(colhdr)
     
     calib_data = np.array(dictionary.values()).T
     
@@ -80,9 +78,6 @@ def file_output(dictionary, header=header_make()):
     
     np.savetxt(calib_out,calib_data, header = colhdr, fmt="%1.4f", comments = "")
     calib_out.close()    
-
-
-
 
 
 GPIO.setmode(GPIO.BCM)

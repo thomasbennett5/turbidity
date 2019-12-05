@@ -9,6 +9,15 @@ from time import sleep
 import DAC8532
 import RPi.GPIO as GPIO
 
+
+def volts_to_ntu(sens_V, led_V, calib_in):
+    sens_order  = fit_power_law(led_V , calib_in[0], calib_in[1], calib_in[2])
+    turbidity   = fit_power_law(sens_V,       order, calib_in[3], calib_in[4]))
+    return turbidity
+
+def fit_power_law(x,a,b,n):
+    return a*(x**n) + b
+
 # Function to stop the animation on button press and save data gathered
 def savquit(event):
     ani.event_source.stop()
@@ -60,7 +69,7 @@ def animate(i, ys, xs):
     
     return line,
 
-
+def init
 # Create figure for plotting
 fig = plt.figure()
 plt.ion()
