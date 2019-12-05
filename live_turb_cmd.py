@@ -39,9 +39,13 @@ def empty_check():
     led_brightness(led_std)
     while readADC() > expected:
         offset -= 0.1
+        led_brightness(led_std+offset)
+        sleep(0.1)
     
     while readADC() < expected:
         offset += 1
+        led_brightness(led_std+offset)
+        sleep(0.1)
     
     return offset
 
@@ -59,6 +63,7 @@ sleep(2)
 offset = empty_check()
 sleep(2)
 print 'Empty check complete'
+print 'offset = ', offset
 
 calibration = np.loadtxt("calibration.fit")
 
