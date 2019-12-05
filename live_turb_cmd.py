@@ -32,6 +32,19 @@ def measure_turbidity(calibration, led_v):
     sens_v = readADC()
     return volts_to_ntu(sens_v, led_v, calibration), sens_v
 
+def empty_check():
+    led_std  = 2.0
+    expected = 3.8384
+    offset = 0
+    led_brightness(led_std)
+    while readADC() > expected:
+        offset -= 0.1
+    
+    while readADC() < expected:
+        offset += 1
+    
+    return offset
+
 # Initialize communication with ADS1256
 ADC = ADS1256.ADS1256()
 if (ADC.ADS1256_init() == -1):
@@ -41,11 +54,16 @@ if (ADC.ADS1256_init() == -1):
 DAC = DAC8532.DAC8532()
 DAC.DAC8532_Out_Voltage(DAC8532.channel_A, 1.0)
 
+print 'Performing empty check'
+sleep(2)
+offset = empty_check()
+sleep(2)
+print 'Empty check complete'
+
 calibration = np.loadtxt("calibration.fit")
+
 led_volts = input("Enter LED voltage here :")
-
-led_brightness(led_volts)
-
+led_brightness(led_volts+offset)
 
 while True:
     turb, sens_volts = measure_turbidity(calibration,led_volts)
