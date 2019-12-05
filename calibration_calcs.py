@@ -25,10 +25,10 @@ def read_in(fname):
         standard_data[idx] = row.split()
     print (header)
     standard_data       = np.array(standard_data).astype(np.float)
-    header_num          = np.array(header[2:]).astype(np.float) 
+    header_num          = np.array(header[3:]).astype(np.float) 
     sort_idx            = header_num.argsort()
-    header[2:]          = header_num[sort_idx]
-    standard_data[:,2:] = standard_data[:,2:][:,sort_idx]
+    header[3:]          = header_num[sort_idx]
+    standard_data[:,3:] = standard_data[:,3:][:,sort_idx]
 
     return standard_data, header
 
@@ -42,11 +42,11 @@ def plot_all_data(data):
 
 def plot_turbidity(data, header, air = False):
     plt.figure(2)
-    if 5.0 in data[:,2:]:
+    if 5.0 in data[:,3:]:
         calibration_range = int(np.where(data[:,2] == 5.0)[0]) - 1
     else: calibration_range =len(data[:,2])
     for i in range(len(data[:calibration_range,0])):
-        plt.plot(data[i,2:], header[2:])
+        plt.plot(data[i,3:], header[3:])
     #plt.show()
 
 def fit_power_law(x,a,b,n):
@@ -63,13 +63,13 @@ def turb_fitting_routine(data, header, plot=False, func='LIN'):
 
     if func == 'PL': 
         fit_func = fit_power_law
-    if 5.0 in data[:,2:]:
+    if 5.0 in data[:,3:]:
         calibration_range = int(np.where(data[:,2] == 5.0)[0]) - 1
     else: calibration_range = len(data[:,2])
 
     calibration_fit = []
     for i in range(2,len(data[:calibration_range,0])):
-        fit, tmp  = spo.curve_fit(fit_func, data[i,2:],header[2:])
+        fit, tmp  = spo.curve_fit(fit_func, data[i,3:],header[3:])
         calibration_fit.append(fit)
         #print (i, fit)
         if plot == True:
