@@ -20,7 +20,7 @@ def readADC(Sensor_channel = 7):
     return voltage
 
 def led_brightness(volts):
-    DAC.DAC8532_Out_Voltage(DAC8532.channel_A, trig_volt[volts])
+    DAC.DAC8532_Out_Voltage(DAC8532.channel_A, volts)
 
 def measure_turbidity(calibration, led_v):
     sens_v = readADC()
