@@ -43,8 +43,9 @@ def plot_all_data(data):
 def plot_turbidity(data, header, air = False):
     plt.figure(2)
     if 5.0 in data[:,3:]:
-        calibration_range = int(np.where(data[:,2] == 5.0)[0]) - 1
-    else: calibration_range =len(data[:,2])
+        calibration_range = int(np.where(data[:,3] == 5.0)[0]) - 1
+    else: calibration_range =len(data[:,3])
+
     for i in range(len(data[:calibration_range,0])):
         plt.plot(data[i,3:], header[3:])
     #plt.show()
@@ -64,11 +65,11 @@ def turb_fitting_routine(data, header, plot=False, func='LIN'):
     if func == 'PL': 
         fit_func = fit_power_law
     if 5.0 in data[:,3:]:
-        calibration_range = int(np.where(data[:,2] == 5.0)[0]) - 1
+        calibration_range = int(np.where(data[:,3] == 5.0)[0]) - 1
     else: calibration_range = len(data[:,2])
 
     calibration_fit = []
-    for i in range(2,len(data[:calibration_range,0])):
+    for i in range(2,calibration_range):
         fit, tmp  = spo.curve_fit(fit_func, data[i,3:],header[3:])
         calibration_fit.append(fit)
         #print (i, fit)
@@ -83,6 +84,7 @@ def turb_fitting_routine(data, header, plot=False, func='LIN'):
     if plot == True: plt.show()
 
     calibration_fit = np.array(calibration_fit)
+
     width_arr = len(calibration_fit[0,:])+1
     height_arr = len(calibration_fit[:,0])
 
@@ -110,12 +112,16 @@ def volt_fitting_routine(data,func='LIN', turb='LIN'):
     if turb == 'PL':
         fit_a, tmp  = spo.curve_fit(fit_func, data[:,0], data[:,1])
         fit_b, tmp  = spo.curve_fit(fit_func, data[:,0], data[:,2])
-        fit = [fit_a, fit_b]
+        fit = np.array([fit_a, fit_b])
     if turb == 'LIN':
-        fit_a, tmp  = spo.curve_fit(fit_func, data[:,0], data[:,1], [1,1,-10])
-        fit_b, tmp  = spo.curve_fit(fit_func, data[:,0], data[:,2], [1,1,-10])
-        fit = [fit_a, fit_b]
+        fit_a, tmp  = spo.curve_fit(fit_func, data[:,0], data[:,1])
+        fit_b, tmp  = spo.curve_fit(fit_func, data[:,0], data[:,2], [-100,1000,1])
+        fit = np.array([fit_a, fit_b])
     return fit
+
+def reject_outliers(data, m=2, colIdx=1):
+
+    return data[abs(data[:,colIdx] - np.mean(data[:,colIdx])) < m * np.std(data)]
 
 def save_final_calibration(turb_cal, volt_cal):
     if len(turb_cal[1,:]) == 4:
@@ -161,9 +167,17 @@ save_final_calibration(turb_calibration, volt_calibration)
 ## TEST SPACE
 ##~~~~~~~~~~~~~~~~~~~
 
+plt.plot(turb_calibration[:,0],turb_calibration[:,1],'r')
+plt.plot(turb_calibration[:,0], fit_power_law(turb_calibration[:,0], volt_calibration[0,0], volt_calibration[0,1], volt_calibration[0,2]))
+plt.plot(turb_calibration[:,0],turb_calibration[:,2])
+plt.plot(turb_calibration[:,0], fit_power_law(turb_calibration[:,0], volt_calibration[1,0], volt_calibration[1,1], volt_calibration[1,2]))
+
+plt.show()
+
 calibration = np.loadtxt("calibration.fit")
 led_volts   = 1.2
 sens_volts  = 1.22
 spoof_data  = np.arange(0,5, 0.1)
+for i, x in enumerate(data[:,0]):
 
-print(volts_to_ntu(sens_volts,led_volts,calibration))
+    print( volts_to_ntu(data[i,4],x,calibration))
