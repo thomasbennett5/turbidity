@@ -43,7 +43,7 @@ def empty_check():
         sleep(0.1)
     
     while readADC() < expected:
-        offset += 1
+        offset += 0.1
         led_brightness(led_std+offset)
         sleep(0.1)
     
@@ -68,6 +68,7 @@ print 'offset = ', offset
 calibration = np.loadtxt("calibration.fit")
 
 led_volts = input("Enter LED voltage here :")
+led_volts = led_volts
 led_brightness(led_volts+offset)
 
 while True:
