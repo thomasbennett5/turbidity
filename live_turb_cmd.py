@@ -42,7 +42,7 @@ DAC = DAC8532.DAC8532()
 DAC.DAC8532_Out_Voltage(DAC8532.channel_A, 1.0)
 
 calibration = np.loadtxt("calibration.fit")
-led_volts = 2.5
+led_volts = input("Enter LED voltage here :")
 
 led_brightness(led_volts)
 
