@@ -30,7 +30,7 @@ def led_brightness(volts):
 
 def measure_turbidity(calibration, led_v):
     sens_v = readADC()
-    return volts_to_ntu(sens_v, led_v, calibration)
+    return volts_to_ntu(sens_v, led_v, calibration), sens_v
 
 # Initialize communication with ADS1256
 ADC = ADS1256.ADS1256()
@@ -48,7 +48,7 @@ led_brightness(led_volts)
 
 
 while True:
-    turb = measure_turbidity(calibration,led_volts)
+    turb, sens_volts = measure_turbidity(calibration,led_volts)
     sys.stdout.write("\r" + "Turbidity: " + str(turb) + ' NTU')
     sys.stdout.flush()
     sleep(0.5)
