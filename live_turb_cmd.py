@@ -7,7 +7,7 @@ import RPi.GPIO as GPIO
 
 def volts_to_ntu(sens_V, led_V, calib_in):
     sens_order  = fit_power_law(led_V , calib_in[0], calib_in[1], calib_in[2])
-    turbidity   = fit_power_law(sens_V,       order, calib_in[3], calib_in[4]))
+    turbidity   = fit_power_law(sens_V,       order, calib_in[3], calib_in[4])
     return turbidity
 
 def fit_power_law(x,a,b,n):
