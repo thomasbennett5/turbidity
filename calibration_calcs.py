@@ -65,7 +65,8 @@ def turb_fitting_routine(data, header, plot=False, func='PL'):
         if plot == True:
             fit_data  = fit_func(data[:,0],fit[0], fit[1], fit[2])
             plt.plot(data[:,0],fit_data)
-    plt.show()
+    
+    if plot == True: plt.show()
 
     calibration_fit = np.array(calibration_fit)
     width_arr = len(calibration_fit[0,:])+1
@@ -99,6 +100,11 @@ def save_final_calibration(turb_cal, volt_cal):
     
     calib_save.close()
 
+def volts_to_ntu(sens_V, led_V, calib_in):
+    sens_order  = fit_power_law(led_V , calib_in[0], calib_in[1], calib_in[2])
+    turbidity   = fit_power_law(sens_V,       order, calib_in[3], calib_in[4]))
+    return turbidity
+
 ## ~~~~~~~~~~~~~~~~~~~~
 ##         MAIN
 ## ~~~~~~~~~~~~~~~~~~~~
@@ -116,18 +122,4 @@ save_final_calibration(turb_calibration, volt_calibration)
 ## TEST SPACE
 ##~~~~~~~~~~~~~~~~~~~
 
-calib_in = np.loadtxt('calibration.fit')
 
-print (calib_in)
-
-volt_test = np.arange(0,5,0.1)
-
-led_volts = 2.7
-
-order = fit_power_law(led_volts,calib_in[0], calib_in[1],calib_in[2])
-
-print (fit_power_law(1.2,calib_in[0], calib_in[1],calib_in[2]))
-
-print (fit_power_law(4,order, calib_in[3], calib_in[4]))
-
-plt.show()

@@ -6,6 +6,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 from matplotlib.animation import FuncAnimation
+from PIL import Image, ImageDraw, ImageFont  
+import io 
 
 '''
 cam.start_preview()
@@ -37,36 +39,57 @@ fheight = (height + 15) // 16 * 16
 Y = np.fromfile(stream, dtype=np.uint8, count=fwidth*fheight).\
         reshape((fheight, fwidth))
 '''
-def get_frame():
+def get_numpy_frame():
 
     with picamera.PiCamera() as camera:
-        res = (1000, 800)
+        '''
+        res = (1024, 800)
         camera.resolution = res
-        #camera.framerate = 24
+        camera.framerate = 24
         #time.sleep(2)
-        output = np.empty((res[0], res[1], 3), dtype=np.uint8)
-        camera.capture(output, 'rgb')
+        output = np.empty((res[1], res[0], 3), dtype=np.uint8)
+        camera.capture(output, 'YUV')
+        #camera.capture(output)
         return output[:,:,0]
         
         '''
         with picamera.array.PiYUVArray(camera) as stream:
-            camera.resolution = (1000, 800)
+            camera.resolution = (1024, 800)
             #camera.start_preview()
             #time.sleep(2)
             camera.capture(stream, 'yuv')
             # Show size of YUV data
-            print(stream.array.shape)
+            #print(stream.array.shape)
             # Show size of RGB converted data
             print(stream.rgb_array.shape)
             img_arr = stream.rgb_array[:,:,0]
             return img_arr
-        '''
+
+def get_image():
+    stream = io.BytesIO()
+    with picamera.PiCamera() as camera:
+        res = (1024, 800)
+        camera.resolution = res
+        camera.capture(stream, 'jpeg')
+        return stream
+
+
 
 def update(i):
-    live_img.set_data(get_frame())
+    #live_img.set_data(get_image())
+    img_stream = get_image()
+    img_stream.seek(0)
+    image = Image.open(img_stream)
+    img.imshow(image)
+
+    #text.clear()
+    #text.text(0.2, 0.6 , "White mean : " + str(whiteArea_avg))
+    #text.text(0.2, 0.4 , "Difference : " + str(whiteArea_avg - blackArea_avg))
+    #text.text(0.2, 0.5 , "Black mean : " + str(blackArea_avg))
 
 
-img_arr = get_frame()
+'''
+img_arr = get_numpy_frame()
 
 y0 = 350
 y1 = 480
@@ -88,15 +111,17 @@ blackArea_height= y1 - y0
 whiteArea_avg = np.average(img_arr[y0:y1, whiteArea_start:whiteArea_stop])
 blackArea_avg = np.average(img_arr[y0:y1, blackArea_start:blackArea_stop])
 
-print "White area average : ", whiteArea_avg
-print "Black area average : ", blackArea_avg
-print "Difference         : ", whiteArea_avg - blackArea_avg
+print ("White area average : ", whiteArea_avg)
+print ("Black area average : ", blackArea_avg)
+print ("Difference         : ", whiteArea_avg - blackArea_avg)
+'''
 
 fig = plt.figure()
 
 img = fig.add_subplot(1,2,1)
-live_img = img.imshow(img_arr)
-
+#live_img = img.imshow(get_image())
+update(1)
+'''
 white_rect = patches.Rectangle((whiteArea_start,y0),whiteArea_width,whiteArea_height,linewidth=1,edgecolor='r',facecolor='none')
 black_rect = patches.Rectangle((blackArea_start,y0),blackArea_width,blackArea_height,linewidth=1,edgecolor='r',facecolor='none')
 
@@ -109,6 +134,7 @@ text.get_yaxis().set_visible(False)
 text.text(0.2, 0.6 , "White mean : " + str(whiteArea_avg))
 text.text(0.2, 0.5 , "Black mean : " + str(blackArea_avg))
 text.text(0.2, 0.4 , "Difference : " + str(whiteArea_avg - blackArea_avg))
+'''
 
-ani = FuncAnimation(plt.gcf(), update, interval=200)
+ani = FuncAnimation(plt.gcf(), update, interval=1000)
 plt.show()
