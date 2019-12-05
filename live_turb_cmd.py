@@ -49,7 +49,7 @@ led_brightness(led_volts)
 
 while True:
     turb, sens_volts = measure_turbidity(calibration,led_volts)
-    sys.stdout.write("\r" + "Turbidity: " + str(turb) + ' NTU')
+    sys.stdout.write("\r" + "Turbidity: " + str(turb) + ' NTU - Sens_v : ' +str(sens_volts) )
     sys.stdout.flush()
     sleep(0.5)
 

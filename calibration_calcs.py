@@ -163,21 +163,30 @@ print (volt_calibration)
 save_final_calibration(turb_calibration, volt_calibration)
 
 
+
 ##~~~~~~~~~~~~~~~~~~~
 ## TEST SPACE
 ##~~~~~~~~~~~~~~~~~~~
+'''
+plt.figure(10)
+plt.plot()
 
+
+plt.figure(11)
 plt.plot(turb_calibration[:,0],turb_calibration[:,1],'r')
 plt.plot(turb_calibration[:,0], fit_power_law(turb_calibration[:,0], volt_calibration[0,0], volt_calibration[0,1], volt_calibration[0,2]))
 plt.plot(turb_calibration[:,0],turb_calibration[:,2])
 plt.plot(turb_calibration[:,0], fit_power_law(turb_calibration[:,0], volt_calibration[1,0], volt_calibration[1,1], volt_calibration[1,2]))
 
 plt.show()
+'''
+
 
 calibration = np.loadtxt("calibration.fit")
-led_volts   = 1.2
-sens_volts  = 1.22
-spoof_data  = np.arange(0,5, 0.1)
-for i, x in enumerate(data[:,0]):
 
-    print( volts_to_ntu(data[i,4],x,calibration))
+sensor  = np.arange(1,5,1)
+led     = np.arange(1,5,1)
+
+plt.plot(sensor, volts_to_ntu(sensor,2, calibration))
+plt.plot(data[10,3:],header[3:])
+plt.show()
