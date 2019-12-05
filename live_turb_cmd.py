@@ -6,10 +6,15 @@ import DAC8532
 import RPi.GPIO as GPIO
 import sys
 
-def volts_to_ntu(sens_V, led_V, calib_in):
-    sens_order  = fit_power_law(led_V , calib_in[0], calib_in[1], calib_in[2])
-    turbidity   = fit_power_law(sens_V,  sens_order, calib_in[3], calib_in[4])
+def volts_to_ntu(sens_V, led_V, calib_in, func = 'LIN'):
+    fit_a       = fit_power_law(led_V, calib_in[0,0], calib_in[0,1], calib_in[0,2])
+    fit_b       = fit_power_law(led_V, calib_in[1,0], calib_in[1,1], calib_in[1,2])
+    turbidity   = fit_line(sens_V,   fit_a, fit_b)
+
     return turbidity
+
+def fit_line(x,a,b):
+    return a*x + b
 
 def fit_power_law(x,a,b,n):
     return a*(x**n) + b
