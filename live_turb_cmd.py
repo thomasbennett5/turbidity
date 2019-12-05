@@ -4,10 +4,11 @@ import numpy as np
 from time import sleep
 import DAC8532
 import RPi.GPIO as GPIO
+import sys
 
 def volts_to_ntu(sens_V, led_V, calib_in):
     sens_order  = fit_power_law(led_V , calib_in[0], calib_in[1], calib_in[2])
-    turbidity   = fit_power_law(sens_V,       order, calib_in[3], calib_in[4])
+    turbidity   = fit_power_law(sens_V,  sens_order, calib_in[3], calib_in[4])
     return turbidity
 
 def fit_power_law(x,a,b,n):
@@ -25,7 +26,6 @@ def led_brightness(volts):
 def measure_turbidity(calibration, led_v):
     sens_v = readADC()
     return volts_to_ntu(sens_v, led_v, calibration)
-  
 
 # Initialize communication with ADS1256
 ADC = ADS1256.ADS1256()
@@ -43,7 +43,9 @@ led_brightness(led_volts)
 
 
 while True:
-    measure_turbidity(calibration,led_volts)
+    turb = measure_turbidity(calibration,led_volts)
+    sys.stdout.write("\r" + "Turbidity: " + turb + ' NTU')
+    sys.stdout.flush()
     sleep(0.5)
 
 
