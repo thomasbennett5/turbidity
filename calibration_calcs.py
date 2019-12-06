@@ -28,7 +28,7 @@ def read_in(fname):
     header_num          = np.array(header[3:]).astype(np.float) 
     sort_idx            = header_num.argsort()
     header[3:]          = header_num[sort_idx]
-    standard_data[:,4:] = standard_data[:,4:][:,sort_idx]
+    standard_data[:,3:] = standard_data[:,3:][:,sort_idx]
 
     return standard_data, header
 
