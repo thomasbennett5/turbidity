@@ -33,6 +33,9 @@ def measure_turbidity(calibration, led_v):
     return volts_to_ntu(sens_v, led_v, calibration), sens_v
 
 def empty_check():
+    print 'Performing empty check'
+    print 'Please ensure no sample is present'
+
     led_std  = 2.0
     expected = 2.9082
     offset = 0
@@ -47,6 +50,8 @@ def empty_check():
         led_brightness(led_std+offset)
         sleep(0.1)
     
+    print 'Empty check complete'
+    print 'offset = ', offset
     return offset
 
 # Initialize communication with ADS1256
@@ -58,13 +63,13 @@ if (ADC.ADS1256_init() == -1):
 DAC = DAC8532.DAC8532()
 DAC.DAC8532_Out_Voltage(DAC8532.channel_A, 1.0)
 
-print 'Performing empty check'
-print 'Please ensure no sample is present'
-sleep(5)
-offset = empty_check()
-sleep(2)
-print 'Empty check complete'
-print 'offset = ', offset
+
+offset_test = raw_input("Would you like to perform an offset check? (yes/no)")
+
+if offset_test == 'yes':
+    offset = empty_check()
+
+else: offset = 0
 
 calibration = np.loadtxt("calibration.fit")
 
@@ -87,7 +92,7 @@ while True:
     turb_res = turb_avg / buffer
     sens_v_res = sens_v_avg / buffer
 
-    sys.stdout.write("\r" + "Turbidity: " + str(turb_res) + ' NTU - Sens_v : ' +str(sens_v_res) )
+    sys.stdout.write("\r" + "Turbidity: " + str(turb_res) + ' NTU - Sens_v : ' +str(sens_v _res) )
     sys.stdout.flush()
     sleep(0.5)
 
