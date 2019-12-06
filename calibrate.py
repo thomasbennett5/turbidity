@@ -18,7 +18,7 @@ def led_brightness(level):
     DAC.DAC8532_Out_Voltage(dac.channel_A, trig_volt[level])
 
 def calibrate():
-    led_levels = np.arange(0,5.2,0.2)
+    led_levels = np.arange(0,0.4,0.2)
     calibration_data["LEDv"] = led_levels
     response2LED = np.zeros(len(led_levels))
     print heading("NTU Value: " + str(NTU_value))
@@ -53,7 +53,8 @@ def heading(text, width= 40):
     pad = (width +len(text))//2
     return '{0}\n{1:>{2}}\n{0}'.format(stars, text, pad)
 
-def file_output(dictionary, header=header_make()):
+def file_output(dictionary):
+    header=header_make()
     calib_out = open('calibration.raw', "w")
     for i in header_make():
         calib_out.write(i+"\n")
