@@ -19,7 +19,7 @@ def led_brightness(volts):
 ADC = ADS1256.ADS1256()
 if (ADC.ADS1256_init() == -1):
     exit()
-ADC.ADS1256_ConfigADC(1,0xE0)
+ADC.ADS1256_ConfigADC(0,0xE0)
 
 # DAC Intitialisation
 DAC = DAC8532.DAC8532()

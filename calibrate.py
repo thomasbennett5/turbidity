@@ -58,24 +58,24 @@ def file_output(dictionary, header=header_make()):
     
     sort_ind = np.argsort(dictionary.keys())
     colhdr = np.array(dictionary.keys())[sort_ind]
-    colhdr = tuple(colhdr)
-    colhdr = "%6s "*len(colhdr)%colhdr
-    print len(colhdr)
-    
+
     calib_data = np.array(dictionary.values()).T
-    
     if calib_data.ndim == 1:
         calib_data = calib_data[sort_ind]
     else: 
         calib_data = calib_data[:,sort_ind]
-    
+
+
     for i in dictionary.keys():
         if i in ['air','empty', 'LEDv']:
             # roll the array 3 place to the right i.e. last column becomes first
             calib_data = np.roll(calib_data,1, axis=1)
-            colhdr = np.roll(colhdr, 1, axis = 1)
-    
-    
+            colhdr = np.roll(colhdr, 1)
+
+    colhdr = tuple(colhdr)
+    colhdr = "%6s "*len(colhdr)%colhdr
+    print len(colhdr)
+
     np.savetxt(calib_out,calib_data, header = str(colhdr), fmt="%1.4f", comments = "")
     calib_out.close()    
 
