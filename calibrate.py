@@ -43,8 +43,8 @@ def calibrate():
 def header_make():  
     title       = "Calibration file for turbity fibre optics system"
     datetime    = "Date and Time of Calibration: " + dt.datetime.now().strftime('%Y-%m-%d - %H:%M:%S')    
-    gain        = raw_input('Please enter detector gain: ')
-    comments    = raw_input('Any comments: ')
+    gain        = 'Detector Gain : ' + raw_input('Please enter detector gain: ')
+    comments    = 'User comments : ' + raw_input('Any comments: ')
     header = [title, datetime, gain, comments]
     return header
 
