@@ -56,7 +56,7 @@ def heading(text, width= 40):
 def file_output(dictionary):
     header=header_make()
     calib_out = open('calibration.raw', "w")
-    for i in header_make():
+    for i in header:
         calib_out.write(i+"\n")
     
     sort_ind = np.argsort(dictionary.keys())
