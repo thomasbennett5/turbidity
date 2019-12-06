@@ -69,7 +69,6 @@ def animate(i, ys, xs):
     
     return line,
 
-def init
 # Create figure for plotting
 fig = plt.figure()
 plt.ion()
