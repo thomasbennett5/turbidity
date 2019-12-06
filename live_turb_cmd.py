@@ -34,7 +34,7 @@ def measure_turbidity(calibration, led_v):
 
 def empty_check():
     led_std  = 2.0
-    expected = 3.8384
+    expected = 2.9082
     offset = 0
     led_brightness(led_std)
     while readADC() > expected:
@@ -59,7 +59,8 @@ DAC = DAC8532.DAC8532()
 DAC.DAC8532_Out_Voltage(DAC8532.channel_A, 1.0)
 
 print 'Performing empty check'
-sleep(2)
+print 'Please ensure no sample is present'
+sleep(5)
 offset = empty_check()
 sleep(2)
 print 'Empty check complete'
