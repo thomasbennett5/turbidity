@@ -41,9 +41,11 @@ def calibrate():
     return response2LED
 
 def header_make():  
-    title = "Calibration file for turbity fibre optics system"
-    datetime  = "Date and Time of Calibration: " + dt.datetime.now().strftime('%Y-%m-%d - %H:%M:%S')    
-    header = [title, datetime]
+    title       = "Calibration file for turbity fibre optics system"
+    datetime    = "Date and Time of Calibration: " + dt.datetime.now().strftime('%Y-%m-%d - %H:%M:%S')    
+    gain        = raw_input('Please enter detector gain: ')
+    comments    = raw_input('Any comments: ')
+    header = [title, datetime, gain, comments]
     return header
 
 def heading(text, width= 40):
@@ -86,7 +88,7 @@ GPIO.setmode(GPIO.BCM)
 ADC = ADS1256.ADS1256()
 if (ADC.ADS1256_init() == -1):
     exit()
-ADC.ADS1256_ConfigADC(1,0xA1)
+ADC.ADS1256_ConfigADC(0,0xA1)
 
 # DAC Intitialisation
 DAC = dac.DAC8532()

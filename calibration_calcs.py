@@ -18,8 +18,8 @@ def read_in(fname):
 
     calib_data = open("data_calibration/"+fname)
     raw_data = calib_data.readlines()
-    header = raw_data[2].split()
-    standard_data = raw_data[3:]
+    header = raw_data[4].split()
+    standard_data = raw_data[5:]
     for idx, row in enumerate(standard_data):
         standard_data[idx] = row.strip()
         standard_data[idx] = row.split()
@@ -28,7 +28,7 @@ def read_in(fname):
     header_num          = np.array(header[3:]).astype(np.float) 
     sort_idx            = header_num.argsort()
     header[3:]          = header_num[sort_idx]
-    standard_data[:,3:] = standard_data[:,3:][:,sort_idx]
+    standard_data[:,3:] = standard_data[:,4:][:,sort_idx]
 
     return standard_data, header
 
