@@ -18,8 +18,8 @@ def read_in(fname):
 
     calib_data = open("data_calibration/"+fname)
     raw_data = calib_data.readlines()
-    header = raw_data[2].split()
-    standard_data = raw_data[3:]
+    header = raw_data[4].split()
+    standard_data = raw_data[5:]
     for idx, row in enumerate(standard_data):
         standard_data[idx] = row.strip()
         standard_data[idx] = row.split()
@@ -35,7 +35,7 @@ def read_in(fname):
 def plot_all_data(data):
     plt.figure(1)
     x_ax = data[:,0]
-    for i in range(1,6):
+    for i in range(1,7):
         plt.plot(x_ax,data[:,i], label = header[i])
     plt.legend()
     plt.show()
@@ -176,13 +176,14 @@ plt.plot(turb_calibration[:,0], fit_power_law(turb_calibration[:,0], volt_calibr
 plt.plot(turb_calibration[:,0],turb_calibration[:,2])
 plt.show()
 
-
+'''
 plt.figure(12)
 
 calibration = np.loadtxt("calibration.fit")
 sensor  = np.arange(1,5,1)
 led     = np.arange(1,5,1)
+
+print (data[10,3:])
 plt.plot(sensor, volts_to_ntu(sensor,2, calibration))
 plt.plot(data[10,3:],header[3:])
 plt.show()
-'''
