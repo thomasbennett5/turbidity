@@ -87,7 +87,7 @@ while True:
     turb_res = turb_avg / buffer
     sens_v_res = sens_v_avg / buffer
 
-    sys.stdout.write("\r" + "Turbidity: " + str(turb_res) + ' NTU - Sens_v : ' +str(sens_volts_res) )
+    sys.stdout.write("\r" + "Turbidity: " + str(turb_res) + ' NTU - Sens_v : ' +str(sens_v_res) )
     sys.stdout.flush()
     sleep(0.5)
 
