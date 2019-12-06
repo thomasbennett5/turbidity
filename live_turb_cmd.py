@@ -77,11 +77,11 @@ while True:
     buffer      = 10.0
     turb_avg    = 0
     sens_v_avg  = 0
-    
+
     for i in np.arange(buffer):
-        turb, sens_volts += measure_turbidity(calibration,led_volts)
-        turb_avg       += turb
-        sens_volts_avg += sens_volts
+        turb, sens_volts = measure_turbidity(calibration,led_volts)
+        turb_avg        += turb
+        sens_volts_avg  += sens_volts
         sleep(0.1)
     
     turb_res = turb_avg / buffer
