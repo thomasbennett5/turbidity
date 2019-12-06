@@ -73,7 +73,13 @@ led_volts = led_volts
 led_brightness(led_volts+offset)
 
 while True:
-    turb, sens_volts = measure_turbidity(calibration,led_volts)
+    buffer = 10.0
+    for i in np.arange(buffer):
+        turb, sens_volts += measure_turbidity(calibration,led_volts)
+        turb        = turb/buffer
+        sens_volts  = sens_volts/buffer
+        sleep(0.1)
+    
     sys.stdout.write("\r" + "Turbidity: " + str(turb) + ' NTU - Sens_v : ' +str(sens_volts) )
     sys.stdout.flush()
     sleep(0.5)
