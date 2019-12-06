@@ -18,7 +18,7 @@ def read_in(fname):
 
     calib_data = open("data_calibration/"+fname)
     raw_data = calib_data.readlines()
-    header = raw_data[4].split()
+    header = raw_data[2].split()
     standard_data = raw_data[5:]
     for idx, row in enumerate(standard_data):
         standard_data[idx] = row.strip()
@@ -115,7 +115,7 @@ def volt_fitting_routine(data,func='LIN', turb='LIN'):
         fit = np.array([fit_a, fit_b])
     if turb == 'LIN':
         fit_a, tmp  = spo.curve_fit(fit_func, data[:,0], data[:,1])
-        fit_b, tmp  = spo.curve_fit(fit_func, data[:,0], data[:,2], [-100,1000,1])
+        fit_b, tmp  = spo.curve_fit(fit_func, data[:,0], data[:,2],  [-100,2000,-1])
         fit = np.array([fit_a, fit_b])
     return fit
 
@@ -141,7 +141,7 @@ def save_final_calibration(turb_cal, volt_cal):
 def volts_to_ntu(sens_V, led_V, calib_in, func = 'LIN'):
     
     fit_a       = fit_power_law(led_V, calib_in[0,0], calib_in[0,1], calib_in[0,2])
-    fit_b       = fit_power_law(led_V, calib_in[1,0], calib_in[1,1], calib_in[1,2])
+    fit_b       = fit_power_law(led_V, calib_in[1,0], calib_in[1,1], calib_in[1,2], [-1000,1000,-1])
     turbidity   = fit_line(sens_V,   fit_a, fit_b)
 
     return turbidity
@@ -167,18 +167,15 @@ save_final_calibration(turb_calibration, volt_calibration)
 ##~~~~~~~~~~~~~~~~~~~
 ## TEST SPACE
 ##~~~~~~~~~~~~~~~~~~~
-'''
-plt.figure(10)
-plt.plot()
+#plt.plot()
 
+#plt.figure(11)
+#plt.plot(turb_calibration[:,0],turb_calibration[:,1],'r')
+#plt.plot(turb_calibration[:,0], fit_power_law(turb_calibration[:,0], volt_calibration[0,0], volt_calibration[0,1], volt_calibration[0,2]))
+#plt.plot(turb_calibration[:,0], fit_power_law(turb_calibration[:,0], volt_calibration[1,0], volt_calibration[1,1], volt_calibration[1,2]))
+#plt.plot(turb_calibration[:,0],turb_calibration[:,2])
+#plt.show()
 
-plt.figure(11)
-plt.plot(turb_calibration[:,0],turb_calibration[:,1],'r')
-plt.plot(turb_calibration[:,0], fit_power_law(turb_calibration[:,0], volt_calibration[0,0], volt_calibration[0,1], volt_calibration[0,2]))
-plt.plot(turb_calibration[:,0],turb_calibration[:,2])
-plt.plot(turb_calibration[:,0], fit_power_law(turb_calibration[:,0], volt_calibration[1,0], volt_calibration[1,1], volt_calibration[1,2]))
-
-plt.show()
 '''
 
 
@@ -190,3 +187,4 @@ led     = np.arange(1,5,1)
 plt.plot(sensor, volts_to_ntu(sensor,2, calibration))
 plt.plot(data[10,3:],header[3:])
 plt.show()
+'''
