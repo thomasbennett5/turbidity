@@ -74,24 +74,31 @@ done = False
 contrast_average = np.zeros(20)
 
 while True:
+    ## Set background colour
     screen.fill(BLACK)
+    
+    ## collect image data, resize and add to screen in the top left
     image1 = cam.get_image()
     image1 = pygame.transform.scale(image1, imgSize)
     screen.blit(image1, (0,0))
+
+    ## Call function to measure the contrast between the two boxes
     contrast = contrast_measurement(image1,box1, box2)
     contrast_average = np.roll(contrast_average,1)
     contrast_average[0] = contrast
 
+    ## Display lots of numbers and words all around the window
     display_values("Contrast Value:", (580, 5))
     display_values(str(np.average(contrast_average)), (580, 25))
     display_values("Press 'P' to save screenshot", (580, 50), size = 10)
     display_values("Press 'Ctrl-S' to save with filename", (400, 450), size = 10)
     
+    ## Warn the operator if the measurement is unstable
+    ## by checking if the array of contrast readings have a small standard deviation
+    ## if greater than 0.8 then display the word "WAIT"
     if np.std(contrast_average) < 0.8:
         pygame.draw.rect(screen,GREEN, readyBox,0)
         display_values("Ready", readyBox[0:2])
-        
-
     else:
         pygame.draw.rect(screen, RED, readyBox, 0)
         display_values("Unstable", readyBox[0:2])
@@ -112,6 +119,9 @@ while True:
     pygame.draw.rect(screen,RED , box2, 1)  
     pygame.display.update()
     
+
+    ## Event handling for detecting keyboard interaction for saving, quiting etc.
+    ## Ctrl-S to save
     for event in pygame.event.get():
         if event.type == pygame.MOUSEBUTTONDOWN:
                 # If the user clicked on the input_box rect.

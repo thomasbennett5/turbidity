@@ -33,6 +33,9 @@ def measure_turbidity(calibration, led_v):
     return volts_to_ntu(sens_v, led_v, calibration), sens_v
 
 def empty_check():
+    '''
+    Function provide indication that things are working normally.
+    '''
     print 'Performing empty check'
     print 'Please ensure no sample is present'
 
@@ -64,7 +67,7 @@ DAC = DAC8532.DAC8532()
 DAC.DAC8532_Out_Voltage(DAC8532.channel_A, 1.0)
 
 
-offset_test = raw_input("Would you like to perform an offset check? (yes/no)")
+offset_test = raw_input("Would you like to perform an offset check? (yes/no) : ")
 
 if offset_test == 'yes':
     offset = empty_check()

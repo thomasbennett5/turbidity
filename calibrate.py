@@ -14,16 +14,24 @@ def readADC_volts(Sensor_channel = 7):
     return voltage
 
 def led_brightness(level):
+    '''
+    Function to set LED brightness
+
+    Currently unused
+    '''
     trig_volt = {"1": 1.0, "2": 2.0, "3": 2.5, "4": 3.0, "5": 3.5}
     DAC.DAC8532_Out_Voltage(dac.channel_A, trig_volt[level])
 
 def calibrate():
+    ## Create array of led voltages between 0 and 5
     led_levels = np.arange(0,5.2,0.2)
     calibration_data["LEDv"] = led_levels
     response2LED = np.zeros(len(led_levels))
     print heading("NTU Value: " + str(NTU_value))
 
     for i, y in enumerate(led_levels):
+        ## for every specified LED brightness, take 20 or (repeats) measurements of detector
+        ## voltage and return the average.
         repeats = 20
         DAC.DAC8532_Out_Voltage(dac.channel_A, y)
         sleep(0.01)
@@ -35,12 +43,22 @@ def calibrate():
 
         response2LED[i] = np.average(average)
         print "LED Voltage: ", y, "Sensor Voltage: ", response2LED[i]
-    
+
+        ## If the average is exactly 5, the detector is staturated to stop
         if np.average(average) == 5: break
 
     return response2LED
 
 def header_make():  
+    '''
+    Function to create the header for the file to be saved
+
+    Tile and date are hard coded
+    Gain and comments are requested from the user
+
+    returns header as a list of strings
+    '''
+
     title       = "Calibration file for turbity fibre optics system"
     datetime    = "Date and Time of Calibration: " + dt.datetime.now().strftime('%Y-%m-%d - %H:%M:%S')    
     gain        = 'Detector Gain : ' + raw_input('Please enter detector gain: ')
@@ -49,16 +67,25 @@ def header_make():
     return header
 
 def heading(text, width= 40):
+    '''
+    Generates a heading to be displayed to the user during calibration
+    '''
     stars = "*" * width
     pad = (width +len(text))//2
     return '{0}\n{1:>{2}}\n{0}'.format(stars, text, pad)
 
 def file_output(dictionary):
+    '''
+    Function to save the raw calibration data to a text file (.raw)
+    '''
+
     header=header_make()
     calib_out = open('calibration.raw', "w")
     for i in header:
         calib_out.write(i+"\n")
     
+    ## Sort the array based on the NTU values stored in the header
+    ## Then apply the same sort to the numerical data to keep them in line
     sort_ind = np.argsort(dictionary.keys())
     colhdr = np.array(dictionary.keys())[sort_ind]
 
@@ -83,6 +110,7 @@ def file_output(dictionary):
     calib_out.close()    
 
 
+# Set mode of GPIO Pins
 GPIO.setmode(GPIO.BCM)
 
 # Initialize communication with ADS1256
@@ -97,6 +125,7 @@ DAC.DAC8532_Out_Voltage(dac.channel_A, 0)
 
 calibration_data = {}
 
+## Print the program start spiel and instructions
 print 'Turbidity calibration routine'
 print "To calibrate for air, enter 'air' below"
 print "To calibrate for an empty cuvette, enter 'empty' below "
